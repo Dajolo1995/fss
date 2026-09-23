@@ -1,0 +1,48 @@
+import type { Expense } from '../../../engine';
+
+export const expenseSeed: Expense[] = [
+  {
+    id: 'expense-1',
+    createdAt: new Date('2026-01-05T12:00:00'),
+    updatedAt: new Date('2026-01-05T12:00:00'),
+    name: 'Renta',
+    period: 'monthly',
+    kind: 'fixed',
+    category: 'Vivienda',
+    amount: 1000000,
+    paymentDays: [5],
+  },
+  {
+    id: 'expense-2',
+    createdAt: new Date('2026-01-05T12:00:00'),
+    updatedAt: new Date('2026-01-05T12:00:00'),
+    name: 'Comida',
+    period: 'monthly',
+    kind: 'fixed',
+    category: 'Vivienda',
+    amount: 600000,
+    paymentDays: [5],
+  },
+  {
+    id: 'expense-3',
+    createdAt: new Date('2026-01-05T12:00:00'),
+    updatedAt: new Date('2026-01-05T12:00:00'),
+    name: 'Claro',
+    period: 'monthly',
+    kind: 'fixed',
+    category: 'Vivienda',
+    amount: 50000,
+    paymentDays: [5],
+  },
+  {
+    id: 'expense-1',
+    createdAt: new Date('2026-01-05T12:00:00'),
+    updatedAt: new Date('2026-01-05T12:00:00'),
+    name: 'Tigo',
+    period: 'monthly',
+    kind: 'fixed',
+    category: 'Vivienda',
+    amount: 50000,
+    paymentDays: [5],
+  },
+];

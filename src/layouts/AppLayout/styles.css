@@ -1,0 +1,7 @@
+.app-layout { min-height: 100vh; }
+.app-layout .ant-layout-sider { background: #200020; }
+.brand { color: #fff; font-size: 22px; font-weight: 800; padding: 24px 24px 28px; letter-spacing: 0; }
+.brand span { color: #DA0081; }
+.app-header { background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 32px; border-bottom: 1px solid #eee; }
+.app-content { padding: 32px; background: #faf8fb; }
+@media (max-width: 640px) { .app-content { padding: 20px 16px; } .app-header { padding: 0 16px; font-size: 12px; } .app-header span:last-child { display: none; } }
