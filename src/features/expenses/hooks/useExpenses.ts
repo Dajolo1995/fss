@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import type { Expense } from '../../../engine';
 import { expenseSeed } from '../data/expenseSeed';
 import type { ExpenseFormValues, ExpenseTotals } from '../types';
+import { useFinance } from '../../../providers/financeContext';
 
 export interface UseExpensesReturn extends ExpenseTotals {
   expenses: Expense[];
@@ -26,7 +27,8 @@ const sumAmount = (expenses: Expense[]): number => expenses.reduce((total, expen
 
 const percentOf = (part: number, total: number): number => total > 0 ? Math.round(part / total * 100) : 0;
 
-export const useExpenses = (): UseExpensesReturn => {
+/** Estado y operaciones. Solo lo instancia `FinanceProvider`; las pantallas usan `useExpenses`. */
+export const useExpensesStore = (): UseExpensesReturn => {
   const [expenses, setExpenses] = useState<Expense[]>(expenseSeed);
   const [loading] = useState(false);
 
@@ -54,3 +56,6 @@ export const useExpenses = (): UseExpensesReturn => {
 
   return { expenses, loading, addExpense, updateExpense, removeExpense, ...totals };
 };
+
+/** Lee el estado compartido desde `FinanceProvider`. */
+export const useExpenses = (): UseExpensesReturn => useFinance().expense;

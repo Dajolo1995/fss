@@ -1,12 +1,62 @@
+import { Button } from '../../libs/antd';
+import { CreditCardIcon, Eye, EyeOff, Receipt, Wallet } from '../../libs/icons';
+import { useNavigate } from '../../libs/reactRouter';
 import EmptyState from '../../components/EmptyState';
-import ScoreGauge from '../../components/ScoreGauge';
-import StatCard from '../../components/StatCard';
-import { formatCOP } from '../../utils/formatters';
+import PageHeader from '../../components/PageHeader';
 import { usePageTitle } from '../../hooks/usePageTitle';
+import { usePrivacyMode } from '../../hooks/usePrivacyMode';
+import BorrowingCapacityCard from './components/BorrowingCapacityCard';
+import DebtProjectionChart from './components/DebtProjectionChart';
+import KpiRow from './components/KpiRow';
+import ScoreCard from './components/ScoreCard';
+import UpcomingPaymentsList from './components/UpcomingPaymentsList';
+import { useDashboard } from './hooks/useDashboard';
 
 const DashboardPage = () => {
   usePageTitle('Dashboard');
-  return <main><h1>Dashboard</h1><p className="page-lead">Una vista clara de tu camino hacia la libertad financiera.</p><div className="stat-grid"><StatCard label="Patrimonio disponible" value={formatCOP(0)} /><StatCard label="Deuda total" value={formatCOP(0)} delta={0} /><StatCard label="Score financiero" value="0 / 1000" /></div><section className="dashboard-grid"><ScoreGauge score={0} /><EmptyState message="Agrega tus ingresos y obligaciones para ver tu diagnóstico." actionLabel="Comenzar" /></section></main>;
+  const navigate = useNavigate();
+  const { hideBalances, togglePrivacy } = usePrivacyMode();
+  const dashboard = useDashboard();
+
+  return (
+    <main className="dashboard-view">
+      <PageHeader
+        title="Dashboard"
+        subtitle="Una vista clara de tu camino hacia la libertad financiera."
+        actions={
+          <Button onClick={togglePrivacy} icon={hideBalances ? <Eye size={16} /> : <EyeOff size={16} />}>
+            {hideBalances ? 'Mostrar Balances' : 'Ocultar Balances'}
+          </Button>
+        }
+      />
+
+      {dashboard.isEmpty
+        ? (
+          <section className="dashboard-card dashboard-onboarding">
+            <EmptyState message={<><strong>Empieza tu diagnóstico financiero</strong><br />Registra tus ingresos, gastos y deudas para calcular tu score y tu capacidad de endeudamiento.</>}>
+              <div className="dashboard-onboarding-actions">
+                <Button type="primary" icon={<Wallet size={16} />} onClick={() => navigate('/income')}>Agregar Ingresos</Button>
+                <Button icon={<Receipt size={16} />} onClick={() => navigate('/expenses')}>Agregar Gastos</Button>
+                <Button icon={<CreditCardIcon size={16} />} onClick={() => navigate('/credit-cards')}>Agregar Tarjetas</Button>
+              </div>
+            </EmptyState>
+          </section>
+        )
+        : (
+          <>
+            <div className="dashboard-hero">
+              <ScoreCard result={dashboard.score} />
+              <BorrowingCapacityCard report={dashboard.capacity} />
+            </div>
+            <KpiRow kpis={dashboard.kpis} />
+            <div className="dashboard-bottom">
+              <DebtProjectionChart series={dashboard.projection} />
+              <UpcomingPaymentsList payments={dashboard.upcoming} />
+            </div>
+          </>
+        )}
+    </main>
+  );
 };
 
 export default DashboardPage;

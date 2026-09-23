@@ -1,9 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 export {
+	Alert,
 	AutoComplete,
 	Avatar,
+	Badge,
 	Button,
 	Card,
+	ColorPicker,
 	ConfigProvider,
 	DatePicker,
 	Divider,
@@ -20,10 +23,12 @@ export {
 	Radio,
 	Segmented,
 	Select,
+	Slider,
 	Space,
 	Statistic,
 	Table,
 	Tag,
+	Tooltip,
   message,
 } from 'antd';
 export type { FormInstance, TableProps, ThemeConfig } from 'antd';

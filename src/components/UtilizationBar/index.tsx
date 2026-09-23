@@ -1,11 +1,11 @@
 import { Progress } from '../../libs/antd';
-import { palette } from '../../theme/tokens';
+import { utilizationLevel } from '../../engine';
+import { utilizationLevelColors } from '../../utils/creditCard';
 
-type UtilizationBarProps = { percent: number };
+type UtilizationBarProps = { percent: number; showInfo?: boolean };
 
-const UtilizationBar = ({ percent }: UtilizationBarProps) => {
-  const color = percent < 30 ? palette.positive : percent < 70 ? palette.primary : palette.accent;
-  return <Progress percent={percent} strokeColor={color} />;
-};
+const UtilizationBar = ({ percent, showInfo = true }: UtilizationBarProps) => (
+  <Progress percent={percent} strokeColor={utilizationLevelColors[utilizationLevel(percent)]} showInfo={showInfo} />
+);
 
 export default UtilizationBar;
